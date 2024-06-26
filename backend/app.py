@@ -1,14 +1,17 @@
 from flask import Flask, jsonify, request
 import cohere
 from flask_cors import CORS
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 
+cohere_api_key = os.getenv("COHERE_API_KEY")
 app = Flask(__name__)
-# CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 CORS(app)
 
 # Initialize the Cohere client once with your API key
-cohere_client = cohere.Client('D4OStnfCGZ6CDTMceSIo19NRpvxRRolNuDAylY8l')
+cohere_client = cohere.Client(cohere_api_key)
 
 @app.route('/api/model', methods=['POST'])
 def model():
