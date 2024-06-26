@@ -34,9 +34,9 @@ This repository contains **VerifEye**, an application designed to help users det
 3. Install the required packages:
     ```bash
     pip install -r requirements.txt
-    ```
-
-4. Run the backend server:
+  ```
+4.Create .env file and add COHERE_API_KEY="Your api key"
+5. Run the backend server:
     ```bash
     python app.py
     ```
