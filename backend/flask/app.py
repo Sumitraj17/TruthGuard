@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 
-
+ 
 cohere_api_key = os.getenv("COHERE_API_KEY")
 app = Flask(__name__)
 CORS(app)
