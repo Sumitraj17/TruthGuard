@@ -1,0 +1,16 @@
+-> git init
+-> git config user.email "your-email"
+-> git config user.name "Name"
+-> git remote add origin https://github.com/Sumitraj17/VerifEye.git
+-> git pull origin master
+-> git checkout -b inital_frontend (switches to new branch)
+
+(Make changes)
+
+-> git add .
+-> git commit -m "message"
+-> git push origin inital_frontend
+
+
+make sure all the commits are made to this branch only("inital_commit").
+then make a pull request.
