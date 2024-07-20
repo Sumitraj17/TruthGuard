@@ -4,9 +4,12 @@ import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name) {
-      return res.send({ error: "Name is required" });
+    const { fname, lname, email, password } = req.body;
+    if (!fname) {
+      return res.send({ error: "First Name is required" });
+    }
+    if (!lname) {
+      return res.send({ error: "Last Name is required" });
     }
     if (!email) {
       return res.send({ error: "Email is required" });
@@ -23,7 +26,8 @@ export const registerController = async (req, res) => {
     }
     const hashedPassword = await hashPassword(password);
     const user = await new userModel({
-      name,
+      fname,
+      lname,
       email,
       password: hashedPassword,
     }).save();
@@ -74,7 +78,8 @@ export const loginController = async (req, res) => {
       message: "Login successfully",
       user: {
         _id: user._id,
-        name: user.name,
+        fname: user.fname,
+        lname: user.lname,
         email: user.email,
       },
       token,
