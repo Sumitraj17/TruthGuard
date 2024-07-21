@@ -1,0 +1,3 @@
+MONGO_URL="mongdb_url"
+JWT_SECRET="Secret Key"
+PORT="Port no"

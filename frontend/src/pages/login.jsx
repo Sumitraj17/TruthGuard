@@ -1,75 +1,88 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
-import { FaSkull } from "react-icons/fa6";
+import { toast } from 'react-toastify';
+import { MdOutlineLogin } from 'react-icons/md';
 import { useNavigate } from "react-router-dom";
+import { Context } from '../context/context.jsx';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const { isLoggedIn, update, setLogin } = useContext(Context);
   const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    
+    // Show loading toast and capture its ID
+    const toastId = toast.info("Loading...", {
+      autoClose: false, // Prevent auto-close during loading
+    });
+
     try {
       const response = await axios.post(
         "http://localhost:8080/api/v1/auth/login",
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
-
-      setSuccess(response.data.message);
-      setError("");
-      setTimeout(() => navigate("/"), 1000);
+      
+      // Update toast to show success message
+      toast.update(toastId, { 
+        render: "Success!",
+        type: "success",
+        autoClose: 2000,
+      });
+      
+      setLogin(false);
+      update(true); // Update login status
+      setTimeout(() => navigate("/main"), 2000); // Redirect after 2 seconds
     } catch (err) {
-      setError(err.response.data.message);
-      setSuccess("");
+      // Update toast to show error message
+      toast.update(toastId, { 
+        render: err.response?.data?.message || "An error occurred. Please try again.",
+        type: "error",
+        autoClose: 2000,
+      });
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-300">
-      <div className="flex w-2/4 bg-white shadow-lg h-2/4">
-        <div className="w-2/3 p-8 flex flex-col justify-between">
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="flex w-2/3 bg-white shadow-lg h-2/4 border border-white rounded-xl">
+        <div className="w-3/4 p-8 flex flex-col justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-8">Login</h2>
-            {error && <div className="text-red-500 mb-4">{error}</div>}
-            {success && <div className="text-green-500 mb-4">{success}</div>}
-            <form onSubmit={handleLogin} className="space-y-6">
+            <h2 className="text-3xl font-bold mb-8 text-black">Login</h2>
+            <form onSubmit={handleLogin} className="space-y-6 text-black">
               <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="email">
+                <label className="block text-lg font-bold mb-2 text-black" htmlFor="email">
                   Email
                 </label>
                 <input
-                  className="w-3/4 px-3 py-2 border rounded"
+                  className="w-3/4 px-3 py-2 border rounded bg-gray-300 shadow-xl transform transition-transform duration-300 hover:scale-110"
                   id="email"
                   type="email"
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
               <div className="mb-6">
-                <label
-                  className="block text-sm font-bold mb-2"
-                  htmlFor="password"
-                >
+                <label className="block text-lg font-bold mb-2 text-black" htmlFor="password">
                   Password
                 </label>
                 <input
-                  className="w-3/4 px-3 py-2 border rounded"
+                  className="w-3/4 px-3 py-2 border rounded bg-gray-300 shadow-xl transform transition-transform duration-300 hover:scale-110"
                   id="password"
                   type="password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
               <div className="flex items-center justify-center mt-8">
                 <button
-                  className="bg-black text-white font-bold py-2 px-6 rounded-full"
+                  className="bg-black text-white font-bold py-2 px-6 rounded-full transform transition-transform duration-300 hover:scale-110"
                   type="submit"
                 >
                   Login
@@ -79,7 +92,7 @@ const Login = () => {
           </div>
         </div>
         <div className="w-1/3 bg-black flex justify-center items-center">
-          <FaSkull className="text-white w-40 h-40" />
+          <MdOutlineLogin className="text-white w-40 h-40" />
         </div>
       </div>
     </div>

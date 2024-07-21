@@ -1,4 +1,4 @@
 Flask==2.3.2
-Flask-Cors==3.1.0
-cohere==2.3.1
+Flask-Cors==3.0.6
+cohere==5.3.0
 python-dotenv

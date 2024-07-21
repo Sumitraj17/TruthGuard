@@ -34,14 +34,14 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-300">
-      <div className="flex w-2/4 bg-white shadow-lg h-2/4">
+    <div className="flex justify-center items-center min-h-screen ">
+      <div className="flex w-2/4 bg-white shadow-lg h-2/4  rounded-xl">
         <div className="w-2/3 p-8 flex flex-col justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-8">Register</h2>
+            <h2 className="text-3xl font-bold mb-8 text-black">Register</h2>
             {error && <div className="text-red-500 mb-4">{error}</div>}
             {success && <div className="text-green-500 mb-4">{success}</div>}
-            <form onSubmit={handleRegister} className="space-y-6">
+            <form onSubmit={handleRegister} className="space-y-6 text-black">
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="fname">
                   First Name
