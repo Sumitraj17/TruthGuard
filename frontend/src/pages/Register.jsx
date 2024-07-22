@@ -48,7 +48,7 @@ const Register = () => {
                   First Name
                 </label>
                 <input
-                  className="w-3/4 px-3 py-2 border rounded"
+                  className="w-3/4 px-3 py-2 border rounded bg-gray-300 shadow-xl transform transition-transform duration-300 hover:scale-110"
                   id="fname"
                   type="text"
                   placeholder="First Name"
@@ -61,7 +61,7 @@ const Register = () => {
                   Last Name
                 </label>
                 <input
-                  className="w-3/4 px-3 py-2 border rounded"
+                  className="w-3/4 px-3 py-2 border rounded bg-gray-300 shadow-xl transform transition-transform duration-300 hover:scale-110"
                   id="lname"
                   type="text"
                   placeholder="Last Name"
@@ -74,7 +74,7 @@ const Register = () => {
                   Email
                 </label>
                 <input
-                  className="w-3/4 px-3 py-2 border rounded"
+                  className="w-3/4 px-3 py-2 border rounded bg-gray-300 shadow-xl transform transition-transform duration-300 hover:scale-110"
                   id="email"
                   type="email"
                   placeholder="Email"
@@ -90,7 +90,7 @@ const Register = () => {
                   Password
                 </label>
                 <input
-                  className="w-3/4 px-3 py-2 border rounded"
+                  className="w-3/4 px-3 py-2 border rounded bg-gray-300 shadow-xl transform transition-transform duration-300 hover:scale-110"
                   id="password"
                   type="password"
                   placeholder="Password"
@@ -100,7 +100,7 @@ const Register = () => {
               </div>
               <div className="flex items-center justify-center mt-8">
                 <button
-                  className="bg-black text-white font-bold py-2 px-6 rounded-full"
+                  className="bg-black text-white font-bold py-2 px-6 rounded-full transform transition-transform duration-300 hover:scale-110"
                   type="submit"
                 >
                   Register
