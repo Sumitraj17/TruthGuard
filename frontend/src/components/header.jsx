@@ -1,26 +1,27 @@
 import { FaSkull } from "react-icons/fa6";
 import { Context } from "../context/context.jsx";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { MdOutlineLogin } from 'react-icons/md';
-import {CgProfile} from 'react-icons/cg';
+import { useContext, useEffect } from "react";
+import { MdOutlineLogin } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
 
 const Header = () => {
-  const { login, setlogin,isLoggedIn } = useContext(Context);
+  const { login, setlogin, isLoggedIn, update, updateLogin } =
+    useContext(Context);
 
   const handleClick = () => {
-    setlogin(false);
+    updateLogin(false);
   };
 
   const scrollToDevelopers = () => {
-    const element = document.getElementById('developers');
+    const element = document.getElementById("developers");
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
-
+  
   return (
-    <header className="fixed top-0 w-full bg-black text-white p-4 z-10 shadow-md">
+    <header className="fixed top-0 w-full text-white bg-black p-2 z-10 shadow-md">
       <div className="flex justify-between">
         <Link to="/" onClick={handleClick}>
           <div className="flex text-4xl">
@@ -31,15 +32,26 @@ const Header = () => {
           </div>
         </Link>
         <nav className="flex space-x-4 text-2xl">
-          {login ? (
+          {isLoggedIn ? (
+            <>
+              <CgProfile className="flex mt-5 text-4xl" />
+            </>
+          ) : login ? (
             <>
               <MdOutlineLogin className="flex mt-5" />
-              <Link to="/" className="m-3 hover:text-blue-500" onClick={handleClick}>
+              <Link
+                to="/"
+                className="m-3 hover:text-blue-500"
+                onClick={handleClick}
+              >
                 Home
               </Link>
             </>
-          ) :isLoggedIn? <><CgProfile className="flex mt-5 text-4xl" /></>: (
-            <button onClick={scrollToDevelopers} className="m-3 hover:text-blue-500">
+          ) : (
+            <button
+              onClick={scrollToDevelopers}
+              className="m-3 hover:text-blue-500"
+            >
               Developers
             </button>
           )}
