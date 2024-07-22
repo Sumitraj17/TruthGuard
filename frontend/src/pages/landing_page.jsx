@@ -4,10 +4,10 @@ import { Context } from "../context/context.jsx";
 import { useContext } from "react";
 import Profile from "../components/profile.jsx";
 import sumit_img from "../images/img.jpg";
-import shivam_img from '../images/img2.jpg'
+import shivam_img from '../images/shivam.jpg'
 
 const Landing = () => {
-  const { login, setLogin } = useContext(Context);
+  const { login, setLogin,updateLogin } = useContext(Context);
 
   const Developers = [
     {
@@ -25,7 +25,7 @@ const Landing = () => {
   ];
 
   const handleClick = () => {
-    setLogin(true);
+    updateLogin(true);
   };
 
   return (

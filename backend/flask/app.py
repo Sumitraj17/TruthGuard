@@ -28,7 +28,7 @@ def model():
 
     # Make a request to the Cohere API
     response = cohere_client.chat(
-        message=f"predict whether it is true or fake {fact['text']} and provide the percentage of confidence. Prediction, Confidence, and Explanation with ':'"
+        message=f"predict whether it is true or fake {fact['text']} and provide the percentage of confidence. Prediction, Confidence, Explanation, and Source of information with ':'"
     )
     
     # Process the response text
@@ -39,6 +39,7 @@ def model():
     prediction = None
     confidence = None
     explanation = None
+    source = None
     
     # Splitting and parsing logic
     parts = response_text.split('\n')
@@ -49,12 +50,15 @@ def model():
             confidence = part.split(':')[1].strip()
         elif 'Explanation' in part:
             explanation = part.split(':', 1)[1].strip()
+        elif 'Source' in part:
+            source = part.split(':',1)[1].strip()
     
     # Construct the JSON response
     result = {
         "prediction": prediction,
         "confidence": confidence,
-        "explanation": explanation
+        "explanation": explanation,
+        "source":source
     }
     
     return jsonify(result)

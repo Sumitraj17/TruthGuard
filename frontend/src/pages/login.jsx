@@ -8,7 +8,7 @@ import { Context } from '../context/context.jsx';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoggedIn, update, setLogin } = useContext(Context);
+  const { isLoggedIn, update, setLogin,updateLogin } = useContext(Context);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -32,7 +32,7 @@ const Login = () => {
         autoClose: 2000,
       });
       
-      setLogin(false);
+      updateLogin(false);
       update(true); // Update login status
       setTimeout(() => navigate("/main"), 2000); // Redirect after 2 seconds
     } catch (err) {

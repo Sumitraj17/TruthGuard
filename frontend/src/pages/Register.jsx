@@ -36,7 +36,7 @@ const Register = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen ">
-      <div className="flex w-2/4 bg-white shadow-lg h-2/4  rounded-xl">
+      <div className="flex w-3/5 bg-white shadow-lg h-1/3 border border-white  rounded-xl">
         <div className="w-2/3 p-8 flex flex-col justify-between">
           <div>
             <h2 className="text-3xl font-bold mb-8 text-black">Register</h2>
@@ -111,7 +111,7 @@ const Register = () => {
         </div>
         <div className="w-1/3 bg-black flex justify-center items-center">
           {/* <FaSkull /> */}
-          <img src={icon} className="text-white w-40 h-40"  />
+          <img src={icon} className="text-white w-50 h-50"  />
         </div>
       </div>
     </div>
