@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { FaSkull } from "react-icons/fa6";
-import icon from '../assets/Icon.png'
+import icon from "../assets/Icon.png";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -13,8 +13,40 @@ const Register = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    if (!fname || !lname || !email || !password) {
+      setError("All fields are required.");
+      setSuccess("");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError("Invalid email format.");
+      setSuccess("");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setError(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one digit, and one special symbol."
+      );
+      setSuccess("");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:8080/api/v1/auth/register",
@@ -35,8 +67,8 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen ">
-      <div className="flex w-3/5 bg-white shadow-lg h-1/3 border border-white  rounded-xl">
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="flex w-3/5 bg-white shadow-lg h-1/3 border border-white rounded-xl">
         <div className="w-2/3 p-8 flex flex-col justify-between">
           <div>
             <h2 className="text-3xl font-bold mb-8 text-black">Register</h2>
@@ -97,6 +129,10 @@ const Register = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <p className="text-xs text-gray-500 mt-2">
+                  Password must be at least 8 characters long and contain at
+                  least one uppercase letter, one digit, and one special symbol.
+                </p>
               </div>
               <div className="flex items-center justify-center mt-8">
                 <button
@@ -110,8 +146,7 @@ const Register = () => {
           </div>
         </div>
         <div className="w-1/3 bg-black flex justify-center items-center">
-          {/* <FaSkull /> */}
-          <img src={icon} className="text-white w-50 h-50"  />
+          <img src={icon} className="text-white w-50 h-50" />
         </div>
       </div>
     </div>
