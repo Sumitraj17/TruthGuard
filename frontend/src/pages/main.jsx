@@ -1,6 +1,7 @@
 import { FaFileUpload, FaGoogleDrive } from "react-icons/fa";
 import { useRef, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { Comment, Hourglass } from "react-loader-spinner";
 
 const Home = () => {
@@ -9,6 +10,7 @@ const Home = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState(null);
   const [loader, setLoader] = useState(false);
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setInput(event.target.value);
   };
@@ -42,6 +44,9 @@ const Home = () => {
     setFile(event.target.files[0]);
   };
 
+  const handleLogout = () => {
+    navigate("/");
+  };
   return (
     <>
       <div className="text-white flex justify-evenly items-center h-screen">
@@ -83,18 +88,23 @@ const Home = () => {
                 />
               </div>
 
-              <div
-                className={
-                  loader
-                    ? "flex text-gray-600 disabled justify-between bg-black rounded-2xl"
-                    : "flex justify-between bg-black  text-white rounded-2xl"
-                }
-              >
+              <div className="flex items-center space-x-4">
                 <button
                   type="submit"
-                  className=" p-1 pl-4 pr-4 text-xl font-bold rounded-2xl shadow-lg"
+                  className={`p-1 pl-4 pr-4 text-xl font-bold rounded-2xl shadow-lg hover:bg-gray-700 ${
+                    loader ? "bg-gray-600" : "bg-black text-white"
+                  }`}
                 >
                   Appraise
+                </button>
+                <button
+                  type="button"
+                  className={`p-1 pl-4 pr-4 text-xl font-bold rounded-2xl shadow-lg hover:bg-gray-700 ${
+                    loader ? "bg-gray-600" : "bg-black text-white"
+                  }`}
+                  onClick={handleLogout}
+                >
+                  Logout
                 </button>
               </div>
             </div>
@@ -148,6 +158,7 @@ const Home = () => {
 };
 
 export default Home;
+
 //<Hourglass
 // visible={true}
 // height="80"
