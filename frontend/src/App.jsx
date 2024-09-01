@@ -5,6 +5,7 @@ import Header from "./components/header.jsx";
 import { ToastContainer } from 'react-toastify';
 import Home from "./pages/main.jsx";
 import Landing from "./pages/landing_page.jsx";
+import Dashboard from "./pages/dashboard.jsx";
 import Footer from "./components/footer.jsx";
 import Login from "./pages/login.jsx";
 import Register from "./pages/Register.jsx";
@@ -48,6 +49,7 @@ const MainContent = () => {
         {isLoggedIn && <Route path="/main" element={<Home />} />}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Dashboard/>}></Route>
       </Routes>
     </div>
   );

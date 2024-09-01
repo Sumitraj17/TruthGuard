@@ -1,5 +1,23 @@
 import mongoose from "mongoose";
 
+const factSchema = new mongoose.Schema({
+  fact: {
+    type: String,
+    require: true,
+  },
+  result:{
+    type:String,
+    require:true
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  time: {
+    type: String,
+    default: () => new Date().toTimeString().split(" ")[0],
+  },
+});
 const userSchema = new mongoose.Schema(
   {
     fname: {
@@ -21,6 +39,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+    },
+    history:{
+      type:[factSchema]
+    }
   },
   { timestamps: true }
 );

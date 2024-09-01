@@ -1,7 +1,8 @@
 import { FaFileUpload, FaGoogleDrive } from "react-icons/fa";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import axios from "axios";
-import { Comment, Hourglass } from "react-loader-spinner";
+import { Context } from "../context/context.jsx";
+import { Hourglass } from "react-loader-spinner";
 
 const Home = () => {
   const fileInputRef = useRef(null);
@@ -9,6 +10,7 @@ const Home = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState(null);
   const [loader, setLoader] = useState(false);
+  const {user} = useContext(Context)
   const handleChange = (event) => {
     setInput(event.target.value);
   };
@@ -24,11 +26,12 @@ const Home = () => {
     if (file) {
       formData.append("file", file);
     }
-    formData.append("text", input);
+    formData.append("prompt", input);
     setLoader(true);
     try {
-      const response = await axios.post("http://127.0.0.1:5000/api/model", {
+      const response = await axios.post("http://localhost:8080/api/v1/auth/fact", {
         text: input,
+        id:user
       });
       setOutput(response.data);
       setInput("");
