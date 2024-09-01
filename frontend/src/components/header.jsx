@@ -34,7 +34,8 @@ const Header = () => {
         <nav className="flex space-x-4 text-2xl">
           {isLoggedIn ? (
             <>
-              <CgProfile className="flex mt-5 text-4xl" />
+              <Link to="/profile"><CgProfile className="flex mt-5 text-4xl" /></Link>
+              
             </>
           ) : login ? (
             <>

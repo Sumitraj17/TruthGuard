@@ -15,6 +15,7 @@ app.use(cors());
 
 connectDB();
 app.use("/api/v1/auth", authRoute);
+app.use('/uploads', express.static('uploads'));
 
 app.get("/", (req, res) => {
   res.send("<h1>Hello Shivam Sumit</h1>");

@@ -20,20 +20,20 @@ cohere_client = cohere.Client(cohere_api_key)
 @app.route('/api/model', methods=['POST'])
 def model():
     fact = request.get_json()
-    # print(fact)
+    print(fact)
     
     # Validate the input
-    if 'text' not in fact:
+    if 'fact' not in fact:
         return jsonify({"error": "Invalid input, 'text' field is required"}), 400
 
     # Make a request to the Cohere API
     response = cohere_client.chat(
-        message=f"predict whether it is true or fake {fact['text']} and provide the percentage of confidence. Prediction, Confidence, Explanation, and Source of information with ':'"
+        message=f"predict whether it is true or fake {fact['fact']} and provide the percentage of confidence. Prediction, Confidence, Explanation, and Source of information with ':'"
     )
     
     # Process the response text
     response_text = response.text
-    # print(response_text)
+    print(response_text)
     
     # Initialize variables
     prediction = None
