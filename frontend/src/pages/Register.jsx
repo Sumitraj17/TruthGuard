@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import icon from '../assets/Icon.png';
+import { FaSkull } from "react-icons/fa6";
+import icon from "../assets/Icon.png";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -13,9 +14,40 @@ const Register = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
-    
+
+    if (!fname || !lname || !email || !password) {
+      setError("All fields are required.");
+      setSuccess("");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError("Invalid email format.");
+      setSuccess("");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setError(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one digit, and one special symbol."
+      );
+      setSuccess("");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("fname", fname);
     formData.append("lname", lname);
@@ -45,7 +77,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen ">
+    <div className="flex justify-center items-center min-h-screen">
       <div className="flex w-3/5 bg-white shadow-lg h-1/3 border border-white rounded-xl">
         <div className="w-2/3 p-8 flex flex-col justify-between">
           <div>
@@ -104,6 +136,10 @@ const Register = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <p className="text-xs text-gray-500 mt-2">
+                  Password must be at least 8 characters long and contain at
+                  least one uppercase letter, one digit, and one special symbol.
+                </p>
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="profilePicture">
