@@ -1,15 +1,16 @@
 import { Provider, Context } from "./context/context.jsx";
-import { useContext } from "react";
+// import { useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/header.jsx";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import Home from "./pages/main.jsx";
 import Landing from "./pages/landing_page.jsx";
 import Dashboard from "./pages/dashboard.jsx";
 import Footer from "./components/footer.jsx";
 import Login from "./pages/login.jsx";
 import Register from "./pages/Register.jsx";
-import 'react-toastify/dist/ReactToastify.css'; // Ensure ToastContainer CSS is imported
+import "react-toastify/dist/ReactToastify.css";
+import PrivateRoute from "./components/PrivateRoute.jsx"; // Import PrivateRoute
 
 function App() {
   return (
@@ -28,11 +29,9 @@ function App() {
 }
 
 const MainContent = () => {
-  const { isLoggedIn } = useContext(Context);
-
   return (
     <div className="flex-grow">
-      <ToastContainer 
+      <ToastContainer
         position="bottom-center"
         autoClose={2000}
         hideProgressBar={false}
@@ -42,14 +41,17 @@ const MainContent = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ zIndex: 9999 }} // Ensuring it is above other content
+        style={{ zIndex: 9999 }}
       />
       <Routes>
         <Route path="/" element={<Landing />} />
-        {isLoggedIn && <Route path="/main" element={<Home />} />}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Dashboard/>}></Route>
+        <Route
+          path="/profile"
+          element={<PrivateRoute element={<Dashboard />} />}
+        />
+        <Route path="/main" element={<PrivateRoute element={<Home />} />} />
       </Routes>
     </div>
   );

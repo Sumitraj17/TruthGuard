@@ -11,7 +11,7 @@ const Home = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState(null);
   const [loader, setLoader] = useState(false);
-  const { user } = useContext(Context); // Context for user
+  const { user, update, updateLogin } = useContext(Context); // Access update functions
   const navigate = useNavigate(); // Navigation
 
   const handleChange = (event) => {
@@ -36,10 +36,13 @@ const Home = () => {
     formData.append("prompt", input);
     setLoader(true);
     try {
-      const response = await axios.post("http://localhost:8080/api/v1/auth/fact", {
-        text: input,
-        id: user // Send user id with the request
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/fact",
+        {
+          text: input,
+          id: user, // Send user id with the request
+        }
+      );
       setOutput(response.data);
       setInput("");
       setLoader(false);
@@ -48,8 +51,11 @@ const Home = () => {
       setLoader(false); // Ensure loader is turned off on error
     }
   };
-
   const handleLogout = () => {
+    update(false); // Update the login state to false
+    updateLogin(false); // Update the login process state to false
+    localStorage.removeItem("id"); // Remove user ID from local storage
+    localStorage.removeItem("loggedIn"); // Clear logged-in status
     navigate("/"); // Redirect to home or login page
   };
 
