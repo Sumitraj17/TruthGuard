@@ -2,14 +2,14 @@ import { Provider, Context } from "./context/context.jsx";
 import { useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/header.jsx";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import Home from "./pages/main.jsx";
 import Landing from "./pages/landing_page.jsx";
 import Dashboard from "./pages/dashboard.jsx";
 import Footer from "./components/footer.jsx";
 import Login from "./pages/login.jsx";
 import Register from "./pages/Register.jsx";
-import 'react-toastify/dist/ReactToastify.css'; // Ensure ToastContainer CSS is imported
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -32,7 +32,7 @@ const MainContent = () => {
 
   return (
     <div className="flex-grow">
-      <ToastContainer 
+      <ToastContainer
         position="bottom-center"
         autoClose={2000}
         hideProgressBar={false}
@@ -49,7 +49,7 @@ const MainContent = () => {
         {isLoggedIn && <Route path="/main" element={<Home />} />}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Dashboard/>}></Route>
+        <Route path="/profile" element={<Dashboard />}></Route>
       </Routes>
     </div>
   );
