@@ -41,8 +41,9 @@ const MainContent = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ zIndex: 9999 }}
+        style={{ zIndex: 9999 }} // Higher Z-index if necessary
       />
+
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/register" element={<Register />} />

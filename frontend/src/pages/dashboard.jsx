@@ -13,6 +13,8 @@ const Dashboard = () => {
       try {
         const resp = await axios.post("http://localhost:8080/api/v1/auth/details", {
           id: user, // Correct way to pass query parameters
+        },{
+          withCredentials:true
         });
         console.log(resp.data.data);
         setUser(resp.data.data); // Update the state with the response data

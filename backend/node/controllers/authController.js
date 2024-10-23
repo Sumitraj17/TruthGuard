@@ -40,7 +40,7 @@ export const registerController = async (req, res) => {
       lname,
       email,
       password: hashedPassword,
-      image:profilePicture, // Store the profile picture path
+      image: profilePicture, // Store the profile picture path
     }).save();
 
     res.status(201).send({
@@ -85,7 +85,10 @@ export const loginController = async (req, res) => {
     const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-    res.status(200).send({
+    res.cookie("accessToken", token, { httpOnly: true });
+
+    (user.refreshToken = token), await user.save();
+    return res.status(200).json({
       success: true,
       message: "Login successfully",
       user: {
@@ -94,7 +97,6 @@ export const loginController = async (req, res) => {
         lname: user.lname,
         email: user.email,
       },
-      token,
     });
   } catch (error) {
     console.log(error);
@@ -108,23 +110,16 @@ export const loginController = async (req, res) => {
 
 export const handleFact = async (req, res) => {
   const { text, id } = req.body;
-  const user = await userModel.findById(id);
-  if (!user)
-    res.status(500).send({
-      message: "No user found",
-    });
-    else{
-      console.log("user found :- "+user.fname)
-    }
+  const user = req.user;
   try {
     const resp = await axios.post("http://127.0.0.1:5000//api/model", {
       fact: text,
     });
-    const newFact ={
-      fact:text,
-      result:resp.data.prediction
-    }
-    user.history.push(newFact)
+    const newFact = {
+      fact: text,
+      result: resp.data.prediction,
+    };
+    user.history.push(newFact);
     await user.save();
     res.status(200).send(resp.data);
   } catch (error) {
@@ -137,16 +132,39 @@ export const getDetails = async (req, res) => {
   const { id } = req.body; // Extracting 'id' from the request body
 
   try {
-    const user = await userModel.findById(id);
-    // console.log(id + " " + user);
-    
-    if (!user) {
-      return res.status(404).send({ message: "User not found" });
-    }
-    
+    const user = req.user;
+
     return res.status(200).send({ data: user });
   } catch (error) {
     console.error("Error fetching user details:", error);
     return res.status(500).send({ message: "Server error" });
+  }
+};
+
+export const logout = async (req, res) => {
+  const user = req.user;
+  try {
+    await userModel.findByIdAndUpdate(
+      user._id,
+      {
+        $set: {
+          refreshToken: undefined,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+    return res
+    .status(200)
+    .json({
+      status:"Success",
+      message:"User Loggedout Successfully"
+    })
+  } catch (error) {
+    return res.status(500).json({
+      status: "Internal Server Error",
+      message: "Something went wrong",
+    });
   }
 };

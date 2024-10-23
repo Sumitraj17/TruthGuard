@@ -13,39 +13,41 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-
-    // Show loading toast and capture its ID
-    const toastId = toast.info("Loading...", {
-      autoClose: false, // Prevent auto-close during loading
-    });
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/login",
-        { email, password }
-      );
-
-      // Update toast to show success message
-      toast.update(toastId, {
-        render: "Success!",
-        type: "success",
-        autoClose: 2000,
-      });
-      updateUser(response.data.user._id)
-      updateLogin(false);
-      update(true); // Update login status
-      setTimeout(() => navigate("/main"), 2000); // Redirect after 2 seconds
-    } catch (err) {
-      // Update toast to show error message
-      toast.update(toastId, {
-        render:
-          err.response?.data?.message || "An error occurred. Please try again.",
-        type: "error",
-        autoClose: 2000,
-      });
-    }
-  };
+      e.preventDefault();
+    
+      // Show loading toast and capture its ID
+      const toastId = toast.info("Loading...", {
+        autoClose: false, // Prevent auto-close during loading
+      });
+    
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/v1/auth/login",
+          { email, password },
+          { withCredentials: true } // Include this option to send cookies
+        );
+        console.log(response)
+        // Update toast to show success message
+        toast.update(toastId, {
+          render: "Success!",
+          type: "success",
+          autoClose: 2000,
+        });
+        updateUser(response.data.user._id);
+        updateLogin(false);
+        update(true); // Update login status
+        setTimeout(() => navigate("/main"), 2000); // Redirect after 2 seconds
+      } catch (err) {
+        // Update toast to show error message
+        toast.update(toastId, {
+          render:
+            err.response?.data?.message || "An error occurred. Please try again.",
+          type: "error",
+          autoClose: 2000,
+        });
+      }
+    };
+    
 
   return (
     <div className="flex justify-center items-center min-h-screen">

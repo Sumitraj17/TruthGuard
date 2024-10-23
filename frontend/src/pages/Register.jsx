@@ -71,7 +71,7 @@ const Register = () => {
       setError("");
       setTimeout(() => navigate("/login"), 500);
     } catch (err) {
-      setError(err.response.data.message);
+      // setError(err.response.data.message);
       setSuccess("");
     }
   };
