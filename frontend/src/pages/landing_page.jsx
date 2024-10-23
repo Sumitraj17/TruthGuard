@@ -8,22 +8,6 @@ import shivam_img from '../images/shivam.jpg'
 
 const Landing = () => {
   const { login, setLogin,updateLogin } = useContext(Context);
-
-  const Developers = [
-    {
-      name: "Sumit Raj",
-      desc: "A Web Developer with an expertise in MERN stack, Java, with an expreience of developing dynamic website",
-      link: "https://www.linkedin.com/in/sumit-raj-8043ba229/",
-      img: sumit_img,
-    },
-    {
-      name: "Kumar Shivam",
-      desc: "Full-stack developer with expertise in C++ and problem-solving, with extensive experience developing real-time websites.",
-      link: "https://www.linkedin.com/in/kumar-shivam-204409307",
-      img: shivam_img,
-    },
-  ];
-
   const handleClick = () => {
     updateLogin(true);
   };
@@ -57,22 +41,6 @@ const Landing = () => {
               Register
             </Link>
           </nav>
-        </div>
-      </div>
-      <div id="developers" className="flex flex-col items-center justify-center h-screen  text-white">
-      <div className="mb-10 p-5">
-          <AnimatedText text="Developers...." />
-        </div>
-        <div className="flex flex-wrap justify-center">
-          {Developers.map((profile, index) => (
-            <Profile
-              key={index}
-              name={profile.name}
-              img={profile.img}
-              desc={profile.desc}
-              link={profile.link}
-            />
-          ))}
         </div>
       </div>
     </>

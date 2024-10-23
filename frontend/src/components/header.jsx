@@ -62,15 +62,7 @@ const Header = () => {
                 <Link to="/" className="m-3 hover:text-blue-500">
                   Home
                 </Link>
-              ) : (
-                /* On other pages (like Home), show the Developers button */
-                <button
-                  onClick={scrollToDevelopers}
-                  className="m-3 hover:text-blue-500"
-                >
-                  Developers
-                </button>
-              )}
+              ) : ("")}
             </>
           )}
         </nav>
