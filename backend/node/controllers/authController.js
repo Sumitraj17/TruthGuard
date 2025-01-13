@@ -112,7 +112,7 @@ export const handleFact = async (req, res) => {
   const { text, id } = req.body;
   const user = req.user;
   try {
-    const resp = await axios.post("http://127.0.0.1:5000//api/model", {
+    const resp = await axios.post("https://verifeye-flask.onrender.com/api/model", {
       fact: text,
     });
     const newFact = {

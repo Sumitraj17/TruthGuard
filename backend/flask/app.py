@@ -9,6 +9,7 @@ load_dotenv()
 
 # Retrieve the Cohere API key from environment variables
 cohere_api_key = os.getenv("COHERE_API_KEY")
+port = os.getenv("PORT")
 
 # Initialize the Flask app and enable CORS
 app = Flask(__name__)
@@ -64,4 +65,4 @@ def model():
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=port)
