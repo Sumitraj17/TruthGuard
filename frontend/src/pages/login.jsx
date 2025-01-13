@@ -4,51 +4,52 @@ import { toast } from "react-toastify";
 import { MdOutlineLogin } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../context/context.jsx";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false);
   const { isLoggedIn, update, setLogin, updateLogin, updateUser } =
     useContext(Context);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-      e.preventDefault();
-    
-      // Show loading toast and capture its ID
-      const toastId = toast.info("Loading...", {
-        autoClose: false, // Prevent auto-close during loading
-      });
-    
-      try {
-        const response = await axios.post(
-          "http://localhost:8080/api/v1/auth/login",
-          { email, password },
-          { withCredentials: true } // Include this option to send cookies
-        );
-        console.log(response)
-        // Update toast to show success message
-        toast.update(toastId, {
-          render: "Success!",
-          type: "success",
-          autoClose: 2000,
-        });
-        updateUser(response.data.user._id);
-        updateLogin(false);
-        update(true); // Update login status
-        setTimeout(() => navigate("/main"), 2000); // Redirect after 2 seconds
-      } catch (err) {
-        // Update toast to show error message
-        toast.update(toastId, {
-          render:
-            err.response?.data?.message || "An error occurred. Please try again.",
-          type: "error",
-          autoClose: 2000,
-        });
-      }
-    };
-    
+    e.preventDefault(); // Show loading toast and capture its ID
 
+    const toastId = toast.info("Loading...", {
+      autoClose: false, // Prevent auto-close during loading
+    });
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/login",
+        { email, password },
+        { withCredentials: true } // Include this option to send cookies
+      );
+      console.log(response); // Update toast to show success message
+      toast.update(toastId, {
+        render: "Success!",
+        type: "success",
+        autoClose: 1000,
+      });
+      updateUser(response.data.user._id);
+      updateLogin(false);
+      update(true); // Update login status
+      setTimeout(() => navigate("/main"), 2000); // Redirect after 2 seconds
+    } catch (err) {
+      // Update toast to show error message
+      toast.update(toastId, {
+        render:
+          err.response?.data?.message || "An error occurred. Please try again.",
+        type: "error",
+        autoClose: 1000,
+      });
+    }
+  };
+  const handlePasswordShow = () => {
+    setShow(!show);
+  };
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="flex w-2/3 bg-white shadow-lg h-2/4 border border-white rounded-xl">
@@ -64,7 +65,7 @@ const Login = () => {
                   Email
                 </label>
                 <input
-                  className="w-3/4 px-3 py-2 border rounded bg-gray-300 shadow-xl transform transition-transform duration-300 hover:scale-110"
+                  className="w-3/4 px-3 py-2 border rounded bg-gray-300 shadow-xl transform transition-transform duration-300 hover:scale-105 border border-black"
                   id="email"
                   type="email"
                   placeholder="Email"
@@ -80,19 +81,33 @@ const Login = () => {
                 >
                   Password
                 </label>
-                <input
-                  className="w-3/4 px-3 py-2 border rounded bg-gray-300 shadow-xl transform transition-transform duration-300 hover:scale-110"
-                  id="password"
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="relative flex justify-between w-3/4 px-3 py-2 border rounded bg-gray-300 shadow-xl transform transition-transform duration-300 hover:scale-105 border border-black">
+                  <input
+                    className="w-full px-3 py-2 bg-gray-300"
+                    id="password"
+                    type={show ? "text" : "password"}
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  {show ? (
+                    <FaEyeSlash
+                      onClick={handlePasswordShow}
+                      className="absolute top-1/2 right-3 transform -translate-y-1/2 text-center text-lg"
+                    />
+                  ) : (
+                    <FaEye
+                      onClick={handlePasswordShow}
+                      className="absolute top-1/2 right-3 transform -translate-y-1/2 text-center text-lg"
+                    />
+                  )}
+                </div>
               </div>
+
               <div className="flex items-center justify-center mt-8">
                 <button
-                  className="bg-black text-white font-bold py-2 px-6 rounded-full transform transition-transform duration-300 hover:scale-110"
+                  className="bg-green-600 text-white font-bold py-2 px-6 rounded-full transform transition-transform duration-300 hover:scale-110"
                   type="submit"
                 >
                   Login

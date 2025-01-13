@@ -21,10 +21,9 @@ const Provider = (props) => {
     setUser(id);
     localStorage.setItem("id", id);
   };
-
   useEffect(() => {
-    setLog(localStorage.getItem("loggedIn") === "true");
-    setLogin(localStorage.getItem("login") === "true");
+    setLog(localStorage.getItem("loggedIn") == "true");
+    setLogin(localStorage.getItem("login") == "true");
     setUser(localStorage.getItem("id") || "");
   }, []);
 

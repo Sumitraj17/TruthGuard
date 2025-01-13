@@ -4,11 +4,15 @@ import { Link, useLocation } from "react-router-dom"; // Import 'useLocation' fr
 import { CgProfile } from "react-icons/cg";
 import { Context } from "../context/context.jsx";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import toast from "react-hot-toast";
 
 const Header = () => {
   const { isLoggedIn, updateLogin, update } = useContext(Context);
+  // const { login, setLogin,updateLogin } = useContext(Context);
+  const handleClick = () => {
+    updateLogin(true);
+  };
   const location = useLocation(); // Get current route location
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -36,10 +40,9 @@ const Header = () => {
     <header className="fixed top-0 w-full text-white bg-black pt-2 pr-2 pl-2 pb-1 z-10 shadow-md">
       <div className="flex justify-between">
         <Link to="/" className="flex text-4xl">
-          <h1 className="m-4">VerifEye</h1>
-          <div className="mt-5">
-            <FaSkull />
-          </div>
+          <h1 className="m-4 bg-gradient-to-r from-blue-500 via-green-500 to-white bg-clip-text text-transparent">
+            VerifEye
+          </h1>
         </Link>
 
         <nav className="flex space-x-4 text-2xl items-center">
@@ -50,7 +53,7 @@ const Header = () => {
               </Link>
               <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-700 text-white text-lg font-bold py-2 px-2 rounded-lg"
+                className="bg-green-500 hover:bg-green-700 text-white text-lg font-bold py-2 px-2 rounded-lg"
               >
                 Logout
               </button>
@@ -59,10 +62,18 @@ const Header = () => {
             <>
               {location.pathname === "/login" ||
               location.pathname === "/register" ? (
-                <Link to="/" className="m-3 hover:text-blue-500">
+                <Link to="/" className="m-3 hover:text-green-500">
                   Home
                 </Link>
-              ) : ("")}
+              ) : (
+                <Link
+                  to="/login"
+                  onClick={handleClick}
+                  className="text-md hover:text-green-500 p-2"
+                >
+                  Login
+                </Link>
+              )}
             </>
           )}
         </nav>

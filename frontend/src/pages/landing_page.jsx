@@ -4,17 +4,17 @@ import { Context } from "../context/context.jsx";
 import { useContext } from "react";
 import Profile from "../components/profile.jsx";
 import sumit_img from "../images/img.jpg";
-import shivam_img from '../images/shivam.jpg'
+import shivam_img from "../images/shivam.jpg";
 
 const Landing = () => {
-  const { login, setLogin,updateLogin } = useContext(Context);
+  const { login, setLogin, updateLogin } = useContext(Context);
   const handleClick = () => {
     updateLogin(true);
   };
 
   return (
     <>
-      <div className="flex flex-col items-center h-screen bg-black pt-16">
+      <div className="flex flex-col items-center  h-screen bg-black pt-16">
         <div className="mb-10 p-5">
           <AnimatedText text="Welcome to VerifEye...." />
         </div>
@@ -24,21 +24,22 @@ const Landing = () => {
           accurate and trustworthy information. Join us in promoting truth and
           transparency to create a safer, more knowledgeable online environment.
         </div>
+
         <div className="mt-10 w-full">
-          <nav className="flex justify-evenly text-2xl font-bold">
-            <Link
+          <nav className="flex justify-center text-xl font-bold">
+            {/* <Link
               to="/login"
               onClick={handleClick}
               className="transform transition-transform duration-300 hover:scale-110 hover:text-blue-500 text-black bg-white rounded-full p-4"
             >
               Login
-            </Link>
+            </Link> */}
             <Link
               to="/register"
               onClick={handleClick}
-              className="transform transition-transform duration-300 hover:scale-110 hover:text-blue-500 text-black bg-white rounded-full p-4"
+              className="transform transition-transform duration-300 hover:scale-105 hover:text-gray-300   bg-green-600 rounded-full p-4"
             >
-              Register
+              Get Stated
             </Link>
           </nav>
         </div>
